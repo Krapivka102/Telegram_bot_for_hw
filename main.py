@@ -21,9 +21,11 @@ def getwiki(s):
         wikitext2=re.sub('\([^()]*\)', '', wikitext2)
         wikitext2=re.sub('\([^()]*\)', '', wikitext2)
         wikitext2=re.sub('\{[^\{\}]*\}', '', wikitext2)
+        wikitext2 += "\nУзнать больше можно по ссылке: " + str(wikipedia.page(s).url)
         return wikitext2
     except Exception as e:
         return 'В энциклопедии нет информации об этом'
+
 
 
 @bot.message_handler(commands=["start"])
@@ -34,6 +36,5 @@ def start(m, res=False):
 @bot.message_handler(content_types=["text"])
 def handle_text(message):
     bot.send_message(message.chat.id, getwiki(message.text))
-
 
 bot.polling(none_stop=True, interval=0)
